@@ -1,0 +1,2436 @@
+priority -50
+extends c
+priority -49
+
+snippet cl "New class" b
+#ifndef ${2:`!v substitute(vim_snippets#Filename('$1_H','ClassName'),'.*','\U&\E','')`}
+#define $2
+#property strict
+
+/*
+$0
+*/
+class ${1:`!v substitute(substitute(vim_snippets#Filename('$1','ClassName'),'^.','\u&',''), '_\(\w\)', '\u\1', 'g')`}
+{
+private:
+   $0
+
+public:
+   $1();
+   ~$1();
+};
+
+$1::$1()
+{
+}
+
+$1::~$1()
+{
+}
+#endif /* $2 */
+endsnippet
+
+snippet propind "Indicator line property" b
+// Indicator plot $1
+#property indicator_label$2  "$1"
+#property indicator_type$2   DRAW_LINE
+#property indicator_style$2  ${3|STYLE_SOLID,STYLE_DASH,STYLE_DOT,STYLE_DASHDOT,STYLE_DASHDOTDOT|}
+#property indicator_width$2  1
+#property indicator_color$2  $0
+endsnippet
+
+snippet clr "Creates colour style value" w
+${1|clrBlack,clrDarkGreen,clrDarkSlateGray,clrOlive,clrGreen,clrTeal,clrNavy,clrPurple,clrMaroon,clrIndigo,clrMidnightBlue,clrDarkBlue,clrDarkOliveGreen,clrSaddleBrown,clrForestGreen,clrOliveDrab,clrSeaGreen,clrDarkGoldenrod,clrDarkSlateBlue,clrSienna,clrMediumBlue,clrBrown,clrDarkTurquoise,clrDimGray,clrLightSeaGreen,clrDarkViolet,clrFireBrick,clrMediumVioletRed,clrMediumSeaGreen,clrChocolate,clrCrimson,clrSteelBlue,clrGoldenrod,clrMediumSpringGreen,clrLawnGreen,clrCadetBlue,clrDarkOrchid,clrYellowGreen,clrLimeGreen,clrOrangeRed,clrDarkOrange,clrOrange,clrGold,clrYellow,clrChartreuse,clrLime,clrSpringGreen,clrAqua,clrDeepSkyBlue,clrBlue,clrMagenta,clrRed,clrGray,clrSlateGray,clrPeru,clrBlueViolet,clrLightSlateGray,clrDeepPink,clrMediumTurquoise,clrDodgerBlue,clrTurquoise,clrRoyalBlue,clrSlateBlue,clrDarkKhaki,clrIndianRed,clrMediumOrchid,clrGreenYellow,clrMediumAquamarine,clrDarkSeaGreen,clrTomato,clrRosyBrown,clrOrchid,clrMediumPurple,clrPaleVioletRed,clrCoral,clrCornflowerBlue,clrDarkGray,clrSandyBrown,clrMediumSlateBlue,clrTan,clrDarkSalmon,clrBurlyWood,clrHotPink,clrSalmon,clrViolet,clrLightCoral,clrSkyBlue,clrLightSalmon,clrPlum,clrKhaki,clrLightGreen,clrAquamarine,clrSilver,clrLightSkyBlue,clrLightSteelBlue,clrLightBlue,clrPaleGreen,clrThistle,clrPowderBlue,clrPaleGoldenrod,clrPaleTurquoise,clrLightGray,clrWheat,clrNavajoWhite,clrMoccasin,clrLightPink,clrGainsboro,clrPeachPuff,clrPink,clrBisque,clrLightGoldenrod,clrBlanchedAlmond,clrLemonChiffon,clrBeige,clrAntiqueWhite,clrPapayaWhip,clrCornsilk,clrLightYellow,clrLightCyan,clrLinen,clrLavender,clrMistyRose,clrOldLace,clrWhiteSmoke,clrSeashell,clrIvory,clrHoneydew,clrAliceBlue,clrLavenderBlush,clrMintCream,clrSnow,clrWhite|}
+endsnippet
+
+snippet style "Creates line style value" w
+${1|STYLE_SOLID,STYLE_DASH,STYLE_DOT,STYLE_DASHDOT,STYLE_DASHDOTDOT|}
+endsnippet
+
+snippet PER "Creates timeframe value" w
+${1|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}
+endsnippet
+
+snippet MODE "Creates line style value" w
+${1|MODE_SMA,MODE_EMA,MODE_SMMA,MODE_LWMA|}
+endsnippet
+
+snippet ANCHOR "Anchor lookup" w
+${1|ANCHOR_LEFT_UPPER,ANCHOR_LEFT,ANCHOR_LEFT_LOWER,ANCHOR_LOWER,ANCHOR_RIGHT_LOWER,ANCHOR_RIGHT,ANCHOR_RIGHT_UPPER,ANCHOR_UPPER,ANCHOR_CENTER|}
+endsnippet
+
+snippet inputLineStyle "Creates line style input" b
+input ENUM_LINE_STYLE ${1:paramName} = ${2|STYLE_SOLID,STYLE_DASH,STYLE_DOT,STYLE_DASHDOT,STYLE_DASHDOTDOT|}; // ${3:Line style}
+endsnippet
+
+snippet inputLineStyling "Creates line color/width/style input" b
+input color ${1:paramName}_color = ${2:Red}; // ${3:Line} color,input int ${1:paramName}_width = ${4:1}; // ${3:Line} style,input ENUM_LINE_STYLE ${1:paramName}_style = ${5|STYLE_SOLID,STYLE_DASH,STYLE_DOT,STYLE_DASHDOT,STYLE_DASHDOTDOT|}; // ${3:Line} style
+endsnippet
+
+snippet inputTimeframe "Creates timeframe input" b
+input ENUM_TIMEFRAMES ${1:paramName} = ${2|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}; // ${3:Timeframe}
+endsnippet
+
+snippet forArray "Iterate array values"
+for (int i = 0; i < ArraySize(${1:array}); ++i)
+{
+   ${2:data_type} item = ${1:array}[i];
+}
+endsnippet
+
+snippet deleteArray "Deletes array of objects"
+for (int i = 0; i < ArraySize(${1:array}); ++i)
+{
+   delete ${1:array}[i];
+}
+ArrayResize(${1:array}, 0);
+endsnippet
+
+snippet resizeArray "Deletes array of objects"
+int size = ArraySize(${1:array});
+ArrayResize(${1:array}, size + ${2:n});
+endsnippet
+
+snippet iOpen "Returns Open price value for the bar of specified symbol with timeframe and shift."
+double ${1:open} = iOpen(NULL, ${2|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}, 0);
+endsnippet
+
+snippet iHigh "Returns High price value for the bar of specified symbol with timeframe and shift."
+double ${1:high} = iHigh(NULL, ${2|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}, 0);
+endsnippet
+
+snippet iLow "Returns Low price value for the bar of specified symbol with timeframe and shift."
+double ${1:low} = iLow(NULL, ${2|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}, 0);
+endsnippet
+
+snippet iClose "Returns Close price value for the bar of specified symbol with timeframe and shift."
+double ${1:close} = iClose(NULL, ${2|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}, 0);
+endsnippet
+
+snippet iTime "Returns Time price value for the bar of specified symbol with timeframe and shift."
+datetime ${1:time} = iTime(NULL, ${2|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}, 0);
+endsnippet
+
+snippet iLowest "Find index of lowest value"
+int ${1:lowestIndex} = iLowest(NULL, ${2|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}, ${4|MODE_OPEN,MODE_LOW,MODE_HIGH,MODE_CLOSE,MODE_VOLUME,MODE_TIME|}, ${5:count}, ${6:start});
+endsnippet
+
+snippet iHighest "Find index of higest value"
+int ${1:highestIndex} = iHighest(NULL, ${2|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}, ${3|MODE_OPEN,MODE_LOW,MODE_HIGH,MODE_CLOSE,MODE_VOLUME,MODE_TIME|}, ${4:count}, ${5:start});
+endsnippet
+
+snippet iLowestLow "Find lowest low value"
+int ${1:lowestIndex} = iLowest(NULL, ${2|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}, MODE_LOW, ${3:count}, ${4:start});
+double ${5:lowest} = iLow(NULL, ${2}, ${1:lowestIndex});
+endsnippet
+
+snippet iHighestHigh "Find highest high value"
+int ${1:highestIndex} = iHighest(NULL, ${2|PERIOD_CURRENT,PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_M30,PERIOD_H1,PERIOD_H4,PERIOD_D1,PERIOD_W1,PERIOD_MN1|}, MODE_HIGH, ${3:count}, ${4:start});
+double ${5:highest} = iHigh(NULL, ${2}, ${1:highestIndex});
+endsnippet
+
+snippet indicator "Indicator template" b
+#property copyright "PaulN"
+#property link      "www.wimmerhorizon.com"
+#property version "1.0"  
+#property description "Version Notes:\n"
+#property strict
+
+#property ${1|indicator_chart_window,indicator_separate_window|}
+#property indicator_buffers 1
+#property indicator_plots   1
+
+// Indicator chart items
+$0
+
+//--- input parameters
+input int      Input1;
+
+//--- indicator buffers
+double         Buffer[];
+
+int OnInit()
+{
+   SetIndexBuffer(0, Buffer);
+
+   return(INIT_SUCCEEDED);
+}
+
+int OnCalculate(const int rates_total,
+                const int prev_calculated,
+                const datetime &time[],
+                const double &open[],
+                const double &high[],
+                const double &low[],
+                const double &close[],
+                const long &tick_volume[],
+                const long &volume[],
+                const int &spread[])
+{
+   // Calculate how many bars to process on this call
+   // On the first call rates_total is the full series and prev_calculated is 0
+   // On subsequent calls prev_calculated is the amount returned from this function
+   int limit=rates_total-prev_calculated-1;
+   
+   // Go back in history
+   // If limit is 0 then its an update so just updates the model for one tick
+   for(int i=limit; i>=0; i--)    // Count from oldest first
+   {      
+   
+   }
+   return(rates_total);
+}
+
+void OnDeinit(const int reason)
+{
+  
+}
+
+endsnippet
+
+snippet expert "Expert Advisor Template" b
+#property copyright "PaulN"
+#property link      "www.wimmerhorizon.com"
+#define VERSION "1.0"
+#property version VERSION  
+#property description "Version Notes:\n"
+#property strict
+
+//--- input parameters
+input int      Input1;
+
+int OnInit()
+{
+   return(INIT_SUCCEEDED);
+}
+
+void OnTick()
+{
+
+}
+
+void OnDeinit(const int reason)
+{
+
+}
+endsnippet
+
+snippet script "Script template" b
+#property copyright "PaulN"
+#property link      "www.wimmerhorizon.com"
+#property version   "1.00"
+#property strict
+#property script_show_inputs
+
+input int      Input1;
+
+void OnStart()
+{
+   
+}
+endsnippet
+
+
+snippet AccountBalance "Returns balance value of the current account"
+double ${1:result} = AccountBalance();
+endsnippet
+
+
+snippet AccountCompany "Returns the brokerage company name where the current account was registered"
+string ${1:result} = AccountCompany();
+endsnippet
+
+
+snippet AccountCredit "Returns credit value of the current account"
+double ${1:result} = AccountCredit();
+endsnippet
+
+
+snippet AccountCurrency "Returns currency name of the current account"
+string ${1:result} = AccountCurrency();
+endsnippet
+
+
+snippet AccountEquity "Returns equity value of the current account"
+double ${1:result} = AccountEquity();
+endsnippet
+
+
+snippet AccountFreeMargin "Returns free margin value of the current account"
+double ${1:result} = AccountFreeMargin();
+endsnippet
+
+
+snippet AccountFreeMarginCheck "Returns free margin that remains after the specified position has been opened at the current price on the current account"
+double ${1:result} = AccountFreeMarginCheck(string ${2:symbol}, int ${3:cmd}, double ${4:volume});
+endsnippet
+
+
+snippet AccountFreeMarginMode "Calculation mode of free margin allowed to open orders on the current account"
+double ${1:result} = AccountFreeMarginMode();
+endsnippet
+
+
+snippet AccountInfoDouble "Returns a value of double type of the corresponding account property"
+double ${1:result} = AccountInfoDouble(int ${2:property_id});
+endsnippet
+
+
+snippet AccountInfoInteger "Returns a value of integer type (bool, int or long) of the corresponding account property"
+long ${1:result} = AccountInfoInteger(int ${2:property_id});
+endsnippet
+
+
+snippet AccountInfoString "Returns a value string type corresponding account property"
+string ${1:result} = AccountInfoString(int ${2:property_id});
+endsnippet
+
+
+snippet AccountLeverage "Returns leverage of the current account"
+int ${1:result} = AccountLeverage();
+endsnippet
+
+
+snippet AccountMargin "Returns margin value of the current account"
+double ${1:result} = AccountMargin();
+endsnippet
+
+
+snippet AccountName "Returns the current account name"
+string ${1:result} = AccountName();
+endsnippet
+
+
+snippet AccountNumber "Returns the current account number"
+int ${1:result} = AccountNumber();
+endsnippet
+
+
+snippet AccountProfit "Returns profit value of the current account"
+double ${1:result} = AccountProfit();
+endsnippet
+
+
+snippet AccountServer "Returns the connected server name"
+string ${1:result} = AccountServer();
+endsnippet
+
+
+snippet AccountStopoutLevel "Returns the value of the Stop Out level"
+int ${1:result} = AccountStopoutLevel();
+endsnippet
+
+
+snippet AccountStopoutMode "Returns the calculation mode for the Stop Out level"
+int ${1:result} = AccountStopoutMode();
+endsnippet
+
+
+snippet acos "Returns the arc cosine of x in radians"
+double ${1:result} = acos(double ${2:val});
+endsnippet
+
+
+snippet Alert "Displays a message in a separate window"
+Alert(${1:argument}, ${2:...});
+endsnippet
+
+
+snippet ArrayBsearch "Returns index of the first found element in the first array dimension"
+int ${1:result} = ArrayBsearch(const double& ${2:array[]}, double ${3:value}, int ${4:count=WHOLE_ARRAY}, int ${5:start=0}, int ${6:direction=MODE_ASCEND});
+endsnippet
+
+
+snippet ArrayCompare "Returns the result of comparing two arrays of "
+int ${1:result} = ArrayCompare(const void& ${2:array1[]}, const void& ${3:array2[]}, int ${4:start1=0}, int ${5:start2=0}, int ${6:count=WHOLE_ARRAY});
+endsnippet
+
+
+snippet ArrayCopy "Copies one array into another"
+int ${1:result} = ArrayCopy(void& ${2:dst_array[]}, const void& ${3:src_array[]}, int ${4:dst_start=0}, int ${5:src_start=0}, int ${6:count=WHOLE_ARRAY});
+endsnippet
+
+
+snippet ArrayCopyRates "Copies rates to the two-dimensional array from chart RateInfo array returns copied bars amount"
+int ${1:result} = ArrayCopyRates(MqlRates& ${2:rates_array[]}, string ${3:symbol=NULL}, int ${4:timeframe=0});
+endsnippet
+
+
+snippet ArrayCopySeries "Copies a series array to another one and returns the count of the copied elements"
+int ${1:result} = ArrayCopySeries(void& ${2:array[]}, int ${3:series_index}, ${4:}string ${5:symbol=NULL}, int ${6:timeframe=0});
+endsnippet
+
+
+snippet ArrayDimension "Returns the multidimensional array rank"
+int ${1:result} = ArrayDimension(void& ${2:array[]});
+endsnippet
+
+
+snippet ArrayFill "Fills an array with the specified value"
+ArrayFill(void& ${1:array[]}, int ${2:start}, int ${3:count}, void ${4:value});
+endsnippet
+
+
+snippet ArrayFree "Frees up buffer of any dynamic array and sets the size of the zero dimension in 0."
+ArrayFree(void& ${1:array[]});
+endsnippet
+
+
+snippet ArrayGetAsSeries "Checks direction of array indexing"
+bool ${1:result} = ArrayGetAsSeries(const void& ${2:array[]});
+endsnippet
+
+
+snippet ArrayInitialize "Sets all elements of a numeric array into a single value"
+int ${1:result} = ArrayInitialize(char ${2:array[]}, char ${3:value});
+endsnippet
+
+
+snippet ArrayIsDynamic "Checks whether an array is dynamic"
+bool ${1:result} = ArrayIsDynamic(const void& ${2:array[]});
+endsnippet
+
+
+snippet ArrayIsSeries "Checks whether an array is a timeseries"
+bool ${1:result} = ArrayIsSeries(const void& ${2:array[]});
+endsnippet
+
+
+snippet ArrayMaximum "Search for an element with the maximal value"
+int ${1:result} = ArrayMaximum(const void& ${2:array[]}, int ${3:count=WHOLE_ARRAY}, ${4:}int ${5:start=0});
+endsnippet
+
+
+snippet ArrayMinimum "Search for an element with the minimal value"
+int ${1:result} = ArrayMinimum(const void& ${2:array[]}, int ${3:count=WHOLE_ARRAY}, ${4:}int ${5:start=0});
+endsnippet
+
+
+snippet ArrayRange "Returns the number of elements in the specified dimension of the array"
+int ${1:result} = ArrayRange(const void& ${2:array[]}, int ${3:rank_index});
+endsnippet
+
+
+snippet ArrayResize "Sets the new size in the first dimension of the array"
+int ${1:result} = ArrayResize(void& ${2:array[]}, int ${3:new_size}, int ${4:reserve_size=0});
+endsnippet
+
+
+snippet ArraySetAsSeries "Sets the direction of array indexing"
+bool ${1:result} = ArraySetAsSeries(const void& ${2:array[]}, bool ${3:flag});
+endsnippet
+
+
+snippet ArraySize "Returns the number of elements in the array"
+int ${1:result} = ArraySize(const void& ${2:array[]});
+endsnippet
+
+
+snippet ArraySort "Sorting of numeric arrays by the first dimension"
+bool ${1:result} = ArraySort(void& ${2:array[]}, int ${3:count=WHOLE_ARRAY}, int ${4:start=0}, int ${5:direction=MODE_ASCEND});
+endsnippet
+
+
+snippet asin "Returns the arc sine of x in radians"
+double ${1:result} = asin(double ${2:val});
+endsnippet
+
+
+snippet atan "Returns the arc tangent of x in radians"
+double ${1:result} = atan(double ${2:value});
+endsnippet
+
+
+snippet Bars "Returns the number of bars count in the history for a specified symbol and period"
+int ${1:result} = Bars(string ${2:symbol_name}, ENUM_TIMEFRAMES ${3:timeframe});
+endsnippet
+
+
+snippet ceil "Returns integer numeric value closest from above"
+double ${1:result} = ceil(double ${2:val});
+endsnippet
+
+
+snippet CharArrayToString "Converting symbol code (ansi) into one-symbol array"
+string ${1:result} = CharArrayToString(uchar ${2:array[]}, int ${3:start=0}, int ${4:count=-1}, uint ${5:codepage=CP_ACP});
+endsnippet
+
+
+snippet ChartApplyTemplate "Applies a specific template from a specified file to the chart"
+bool ${1:result} = ChartApplyTemplate(long ${2:chart_id}, const string ${3:filename});
+endsnippet
+
+
+snippet ChartClose "Closes the specified chart"
+bool ${1:result} = ChartClose(long ${2:chart_id=0});
+endsnippet
+
+
+snippet ChartFirst "Returns the ID of the first chart of the client terminal"
+long ${1:result} = ChartFirst();
+endsnippet
+
+
+snippet ChartGetDouble "Returns the double value property of the specified chart"
+double ${1:result} = ChartGetDouble(long ${2:chart_id}, int ${3:prop_id}, int ${4:sub_window=0});
+endsnippet
+
+
+snippet ChartGetInteger "Returns the integer value property of the specified chart"
+long ${1:result} = ChartGetInteger(long ${2:chart_id}, int ${3:prop_id}, int ${4:sub_window=0});
+endsnippet
+
+
+snippet ChartGetString "Returns the string value property of the specified chart"
+string ${1:result} = ChartGetString(long ${2:chart_id}, int ${3:prop_id});
+endsnippet
+
+
+snippet ChartID "Returns the ID of the current chart"
+long ${1:result} = ChartID();
+endsnippet
+
+
+snippet ChartIndicatorDelete "Removes an indicator with a specified name from the specified chart window"
+bool ${1:result} = ChartIndicatorDelete(long ${2:chart_id}, int ${3:sub_window}, ${4:}const string ${5:indicator_shortname});
+endsnippet
+
+
+snippet ChartIndicatorName "Returns the short name of the indicator by the number in the indicators list on the specified chart window"
+string ${1:result} = ChartIndicatorName(long ${2:chart_id}, int ${3:sub_window}, int ${4:index});
+endsnippet
+
+
+snippet ChartIndicatorsTotal "Returns the number of all indicators applied to the specified chart window."
+int ${1:result} = ChartIndicatorsTotal(long ${2:chart_id}, int ${3:sub_window});
+endsnippet
+
+
+snippet ChartNavigate "Performs shift of the specified chart by the specified number of bars relative to the specified position in the chart"
+bool ${1:result} = ChartNavigate(long ${2:chart_id}, int ${3:position}, int ${4:shift=0});
+endsnippet
+
+
+snippet ChartNext "Returns the chart ID of the chart next to the specified one"
+long ${1:result} = ChartNext(long ${2:chart_id});
+endsnippet
+
+
+snippet ChartOpen "Opens a new chart with the specified symbol and period"
+long ${1:result} = ChartOpen(string ${2:symbol}, ENUM_TIMEFRAMES ${3:period});
+endsnippet
+
+
+snippet CharToStr "Conversion of the symbol code into a one-character string"
+string ${1:result} = CharToStr(uchar ${2:char_code});
+endsnippet
+
+
+snippet CharToString "Converting a symbol code into a one-character string"
+string ${1:result} = CharToString(uchar ${2:char_code});
+endsnippet
+
+
+snippet ChartPeriod "Returns the period value of the specified chart"
+ENUM_TIMEFRAMES ${1:result} = ChartPeriod(long ${2:chart_id=0});
+endsnippet
+
+
+snippet ChartPriceOnDropped "Returns the price coordinate of the chart point, the Expert Advisor or script has been dropped to"
+double ${1:result} = ChartPriceOnDropped();
+endsnippet
+
+
+snippet ChartRedraw "Calls a forced redrawing of a specified chart"
+ChartRedraw(long ${1:chart_id=0});
+endsnippet
+
+
+snippet ChartSaveTemplate "Saves current chart settings in a template with a specified name"
+bool ${1:result} = ChartSaveTemplate(long ${2:chart_id}, const string ${3:filename});
+endsnippet
+
+
+snippet ChartScreenShot "Provides a screenshot of the chart of its current state in a gif format"
+bool ${1:result} = ChartScreenShot(long ${2:chart_id}, string ${3:filename}, int ${4:width}, int ${5:height}, ENUM_ALIGN_MODE ${6:align_mode=ALIGN_RIGHT});
+endsnippet
+
+
+snippet ChartSetDouble "Sets the double value for a corresponding property of the specified chart"
+bool ${1:result} = ChartSetDouble(long ${2:chart_id}, int ${3:prop_id}, double ${4:value});
+endsnippet
+
+
+snippet ChartSetInteger "Sets the integer value (datetime, int, color, bool or char) for a corresponding property of the specified chart"
+bool ${1:result} = ChartSetInteger(long ${2:chart_id}, int ${3:prop_id}, long ${4:value});
+endsnippet
+
+
+snippet ChartSetString "Sets the string value for a corresponding property of the specified chart"
+bool ${1:result} = ChartSetString(long ${2:chart_id}, int ${3:prop_id}, string ${4:str_value});
+endsnippet
+
+
+snippet ChartSetSymbolPeriod "Changes the symbol value and a period of the specified chart"
+bool ${1:result} = ChartSetSymbolPeriod(long ${2:chart_id}, string ${3:symbol}, ENUM_TIMEFRAMES ${4:period});
+endsnippet
+
+
+snippet ChartSymbol "Returns the symbol name of the specified chart"
+string ${1:result} = ChartSymbol(long ${2:chart_id=0});
+endsnippet
+
+
+snippet ChartTimeOnDropped "Returns the time coordinate of the chart point, the Expert Advisor or script has been dropped to"
+datetime ${1:result} = ChartTimeOnDropped();
+endsnippet
+
+
+snippet ChartTimePriceToXY "Converts the coordinates of a chart from the time/price representation to the X and Y coordinates"
+bool ${1:result} = ChartTimePriceToXY(long ${2:chart_id}, int ${3:sub_window}, datetime ${4:time}, ${5:}double ${6:price}, ${7:}int& ${8:x}, ${9:}int& ${10:y});
+endsnippet
+
+
+snippet ChartWindowFind "Returns the number of a subwindow where an indicator is drawn"
+int ${1:result} = ChartWindowFind(long ${2:chart_id}, string ${3:indicator_shortname}INDICATOR_SHORTNAME);
+endsnippet
+
+
+snippet ChartWindowOnDropped "Returns the number (index) of the chart subwindow, the Expert Advisor or script has been dropped to"
+int ${1:result} = ChartWindowOnDropped();
+endsnippet
+
+
+snippet ChartXOnDropped "Returns the X coordinate of the chart point, the Expert Advisor or script has been dropped to"
+int ${1:result} = ChartXOnDropped();
+endsnippet
+
+
+snippet ChartXYToTimePrice "Converts the X and Y coordinates on a chart to the time and price values"
+bool ${1:result} = ChartXYToTimePrice(long ${2:chart_id}, int ${3:x}, ${4:}int ${5:y}, ${6:}int& ${7:sub_window}, datetime& ${8:time}, ${9:}double& ${10:price});
+endsnippet
+
+
+snippet ChartYOnDropped "Returns the Y coordinate of the chart point, the Expert Advisor or script has been dropped to"
+int ${1:result} = ChartYOnDropped();
+endsnippet
+
+
+snippet CheckPointer "Returns the type of the object pointer"
+ENUM_POINTER_TYPE ${1:result} = CheckPointer(object ${2:*}${3:anyobject});
+endsnippet
+
+
+snippet ColorToARGB "Converting color type to uint type to receive ARGB representation of the color."
+uint ${1:result} = ColorToARGB(color ${2:clr}, uchar ${3:alpha=255});
+endsnippet
+
+
+snippet ColorToString "Converting color value into string as "R,G,B""
+string ${1:result} = ColorToString(color ${2:color_value}, bool ${3:color_name});
+endsnippet
+
+
+snippet Comment "Outputs a comment in the left top corner of the chart"
+Comment(${1:argument}, ${2:...});
+endsnippet
+
+
+snippet CopyClose "Gets history data on bar closing price for a specified symbol and period into an array"
+int ${1:result} = CopyClose(string ${2:symbol_name}, ENUM_TIMEFRAMES ${3:timeframe}, int ${4:start_pos}, int ${5:count}, double ${6:close_array[]});
+endsnippet
+
+
+snippet CopyHigh "Gets history data on maximal bar price for a specified symbol and period into an array"
+int ${1:result} = CopyHigh(string ${2:symbol_name}, ENUM_TIMEFRAMES ${3:timeframe}, int ${4:start_pos}, int ${5:count}, double ${6:high_array[]});
+endsnippet
+
+
+snippet CopyLow "Gets history data on minimal bar price for a specified symbol and period into an array"
+int ${1:result} = CopyLow(string ${2:symbol_name}, ENUM_TIMEFRAMES ${3:timeframe}, int ${4:start_pos}, int ${5:count}, double ${6:low_array[]});
+endsnippet
+
+
+snippet CopyOpen "Gets history data on bar opening price for a specified symbol and period into an array"
+int ${1:result} = CopyOpen(string ${2:symbol_name}, ENUM_TIMEFRAMES ${3:timeframe}, int ${4:start_pos}, int ${5:count}, double ${6:open_array[]});
+endsnippet
+
+
+snippet CopyRates "Gets history data of the "
+int ${1:result} = CopyRates(string ${2:symbol_name}, ENUM_TIMEFRAMES ${3:timeframe}, int ${4:start_pos}, int ${5:count}, MqlRates ${6:rates_array[]});
+endsnippet
+
+
+snippet CopyTickVolume "Gets history data on tick volumes for a specified symbol and period into an array"
+int ${1:result} = CopyTickVolume(string ${2:symbol_name}, ENUM_TIMEFRAMES ${3:timeframe}, int ${4:start_pos}, int ${5:count}, long ${6:volume_array[]});
+endsnippet
+
+
+snippet CopyTime "Gets history data on bar opening time for a specified symbol and period into an array"
+int ${1:result} = CopyTime(string ${2:symbol_name}, ENUM_TIMEFRAMES ${3:timeframe}, int ${4:start_pos}, int ${5:count}, datetime ${6:time_array[]});
+endsnippet
+
+
+snippet cos "Returns the cosine of a number"
+double ${1:result} = cos(double ${2:value});
+endsnippet
+
+
+snippet CryptDecode "Performs the inverse transformation of the data from array"
+int ${1:result} = CryptDecode(ENUM_CRYPT_METHOD ${2:method}, const uchar& ${3:data[]}, const uchar& ${4:key[]}, uchar& ${5:result[]});
+endsnippet
+
+
+snippet CryptEncode "Transforms the data from array with the specified method"
+int ${1:result} = CryptEncode(ENUM_CRYPT_METHOD ${2:method}, const uchar& ${3:data[]}, const uchar& ${4:key[]}, uchar& ${5:result[]});
+endsnippet
+
+
+snippet Day "Returns the current day of the month, i.e., the day of month of the last known server time"
+int ${1:result} = Day();
+endsnippet
+
+
+snippet DayOfWeek "Returns the current zero-based day of the week of the last known server time"
+int ${1:result} = DayOfWeek();
+endsnippet
+
+
+snippet DayOfYear "Returns the current day of the year i.e., the day of year of the last known server time"
+int ${1:result} = DayOfYear();
+endsnippet
+
+
+snippet DebugBreak "Program breakpoint in debugging"
+DebugBreak();
+endsnippet
+
+
+snippet Digits "Returns the number of decimal digits determining the accuracy of the price value of the current chart symbol"
+int ${1:result} = Digits();
+endsnippet
+
+
+snippet DoubleToStr "Returns text string with the specified numerical value converted into a specified precision format"
+string ${1:result} = DoubleToStr(double ${2:value}, int ${3:digits});
+endsnippet
+
+
+snippet DoubleToString "Converting a numeric value to a text line with a specified accuracy"
+string ${1:result} = DoubleToString(double ${2:value}, int ${3:digits=8});
+endsnippet
+
+
+snippet EnumToString "Converting an enumeration value of any type to string"
+string ${1:result} = EnumToString(any_enum ${2:value});
+endsnippet
+
+
+snippet EventChartCustom "Generates a custom event for the specified chart"
+bool ${1:result} = EventChartCustom(long ${2:chart_id}, ushort ${3:custom_event_id}, long ${4:lparam}, double ${5:dparam}, string ${6:sparam});
+endsnippet
+
+
+snippet EventKillTimer "Stops the generation of events by the timer in the current chart"
+EventKillTimer();
+endsnippet
+
+
+snippet EventSetMillisecondTimer "Launches event generator of the high-resolution timer with a period less than 1 second for the current chart"
+bool ${1:result} = EventSetMillisecondTimer(int ${2:milliseconds});
+endsnippet
+
+
+snippet EventSetTimer "Starts the timer event generator with the specified periodicity for the current chart"
+bool ${1:result} = EventSetTimer(int ${2:seconds});
+endsnippet
+
+
+snippet exp "Returns exponent of a number"
+double ${1:result} = exp(double ${2:value});
+endsnippet
+
+
+snippet ExpertRemove "Stops Expert Advisor and unloads it from the chart"
+ExpertRemove();
+endsnippet
+
+
+snippet fabs "Returns absolute value (modulus) of the specified numeric value"
+double ${1:result} = fabs(double ${2:value});
+endsnippet
+
+
+snippet FileClose "Closes a previously opened file"
+FileClose(int ${1:file_handle});
+endsnippet
+
+
+snippet FileCopy "Copies the original file from a local or shared folder to another file"
+bool ${1:result} = FileCopy(const string ${2:src_file_name}, int ${3:common_flag}, const string ${4:dst_file_name}, int ${5:mode_flags});
+endsnippet
+
+
+snippet FileDelete "Deletes a specified file"
+bool ${1:result} = FileDelete(const string ${2:file_name}, int ${3:common_flag=0});
+endsnippet
+
+
+snippet FileFindClose "Closes search handle"
+FileFindClose(long ${1:search_handle});
+endsnippet
+
+
+snippet FileFindFirst "Starts the search of files in a directory in accordance with the specified filter"
+long ${1:result} = FileFindFirst(const string ${2:file_filter}, string& ${3:returned_filename}, int ${4:common_flag=0});
+endsnippet
+
+
+snippet FileFindNext "Continues the search started by the FileFindFirst() function"
+bool ${1:result} = FileFindNext(long ${2:search_handle}, string& ${3:returned_filename});
+endsnippet
+
+
+snippet FileFlush "Writes to a disk all data remaining in the input/output file buffer"
+FileFlush(int ${1:file_handle});
+endsnippet
+
+
+snippet FileGetInteger "Gets an integer property of a file"
+long ${1:result} = FileGetInteger(int ${2:file_handle}, ENUM_FILE_PROPERTY_INTEGER ${3:property_id});
+endsnippet
+
+
+snippet FileIsEnding "Defines the end of a file in the process of reading"
+bool ${1:result} = FileIsEnding(int ${2:file_handle});
+endsnippet
+
+
+snippet FileIsExist "Checks the existence of a file"
+bool ${1:result} = FileIsExist(const string ${2:file_name}, int ${3:common_flag=0});
+endsnippet
+
+
+snippet FileIsLineEnding "Defines the end of a line in a text file in the process of reading"
+bool ${1:result} = FileIsLineEnding(int ${2:file_handle});
+endsnippet
+
+
+snippet FileMove "Moves or renames a file"
+bool ${1:result} = FileMove(const string ${2:src_file_name}, int ${3:common_flag}, const string ${4:dst_file_name}, int ${5:mode_flags});
+endsnippet
+
+
+snippet FileOpen "Opens a file with a specified name and flag"
+int ${1:result} = FileOpen(string ${2:file_name}, int ${3:open_flags}, short ${4:delimiter=';'}, uint ${5:codepage=CP_ACP});
+endsnippet
+
+
+snippet FileOpenHistory "Opens file in the current history directory or in its subfolders"
+int ${1:result} = FileOpenHistory(int ${2:filename}, int ${3:mode}, int ${4:delimiter=';'});
+endsnippet
+
+
+snippet FileReadArray "Reads arrays of any type except for string from the file of the BIN type"
+uint ${1:result} = FileReadArray(int ${2:file_handle}, void& ${3:array[]}, int ${4:start=0}, int ${5:count=WHOLE_ARRAY});
+endsnippet
+
+
+snippet FileReadBool "Reads from the file of the CSV type a string from the current position till a delimiter (or till the end of a text line) and converts the read string to a value of bool type"
+bool ${1:result} = FileReadBool(int ${2:file_handle});
+endsnippet
+
+
+snippet FileReadDatetime "Reads from the file of the CSV type a string of one of the formats: "YYYY.MM.DD HH:MM:SS", "YYYY.MM.DD" or "HH:MM:SS" - and converts it into a datetime value"
+datetime ${1:result} = FileReadDatetime(int ${2:file_handle});
+endsnippet
+
+
+snippet FileReadDouble "Reads a double value from the current position of the file pointer"
+double ${1:result} = FileReadDouble(int ${2:file_handle}, int ${3:size=DOUBLE_VALUE});
+endsnippet
+
+
+snippet FileReadFloat "Reads a float value from the current position of the file pointer"
+float ${1:result} = FileReadFloat(int ${2:file_handle});
+endsnippet
+
+
+snippet FileReadInteger "Reads int, short or char value from the current position of the file pointer"
+int ${1:result} = FileReadInteger(int ${2:file_handle}, int ${3:size=INT_VALUE});
+endsnippet
+
+
+snippet FileReadLong "Reads a long type value from the current position of the file pointer"
+long ${1:result} = FileReadLong(int ${2:file_handle});
+endsnippet
+
+
+snippet FileReadNumber "Reads from the file of the CSV type a string from the current position till a delimiter (or til the end of a text line) and converts the read string into double value"
+double ${1:result} = FileReadNumber(int ${2:file_handle});
+endsnippet
+
+
+snippet FileReadString "Reads a string from the current position of a file pointer from a file"
+string ${1:result} = FileReadString(int ${2:file_handle}, int ${3:length=0});
+endsnippet
+
+
+snippet FileReadStruct "Reads the contents from a binary file  into a structure passed as a parameter, from the current position of the file pointer"
+uint ${1:result} = FileReadStruct(int ${2:file_handle}, const void& ${3:struct_object}, int ${4:size=-1});
+endsnippet
+
+
+snippet FileSeek "Moves the position of the file pointer by a specified number of bytes relative to the specified position"
+bool ${1:result} = FileSeek(int ${2:file_handle}, long ${3:offset}, ENUM_FILE_POSITION ${4:origin});
+endsnippet
+
+
+snippet FileSize "Returns the size of a corresponding open file"
+ulong ${1:result} = FileSize(int ${2:file_handle});
+endsnippet
+
+
+snippet FileTell "Returns the current position of the file pointer of a corresponding open file"
+ulong ${1:result} = FileTell(int ${2:file_handle});
+endsnippet
+
+
+snippet FileWrite "Writes data to a file of CSV or TXT type"
+uint ${1:result} = FileWrite(int ${2:file_handle}, ${3:...});
+endsnippet
+
+
+snippet FileWriteArray "Writes arrays of any type except for string into a file of BIN type"
+uint ${1:result} = FileWriteArray(int ${2:file_handle}, const void& ${3:array[]}, int ${4:start=0}, int ${5:count=WHOLE_ARRAY});
+endsnippet
+
+
+snippet FileWriteDouble "Writes value of the double type from the current position of a file pointer into a binary file"
+uint ${1:result} = FileWriteDouble(int ${2:file_handle}, double ${3:value});
+endsnippet
+
+
+snippet FileWriteFloat "Writes value of the float type from the current position of a file pointer into a binary file"
+uint ${1:result} = FileWriteFloat(int ${2:file_handle}, float ${3:value});
+endsnippet
+
+
+snippet FileWriteInteger " Writes value of the int type from the current position of a file pointer into a binary file"
+uint ${1:result} = FileWriteInteger(int ${2:file_handle}, int ${3:value}, int ${4:size=INT_VALUE});
+endsnippet
+
+
+snippet FileWriteLong "Writes value of the long type from the current position of a file pointer into a binary file"
+uint ${1:result} = FileWriteLong(int ${2:file_handle}, long ${3:value});
+endsnippet
+
+
+snippet FileWriteString "Writes the value of a string parameter into a BIN or TXT file starting from the current position of the file pointer"
+uint ${1:result} = FileWriteString(int ${2:file_handle}, const string ${3:text_string}, int ${4:length=0});
+endsnippet
+
+
+snippet FileWriteStruct "Writes the contents of a structure passed as a parameter into a binary file, starting from the current position of the file pointer"
+uint ${1:result} = FileWriteStruct(int ${2:file_handle}, const void& ${3:struct_object}, int ${4:size=-1});
+endsnippet
+
+
+snippet floor "Returns integer numeric value closest from below"
+double ${1:result} = floor(double ${2:val});
+endsnippet
+
+
+snippet fmax "Returns the maximal value of the two numeric values"
+double ${1:result} = fmax(double ${2:value1}, double ${3:value2});
+endsnippet
+
+
+snippet fmin "Returns the minimal value of the two numeric values"
+double ${1:result} = fmin(double ${2:value1}, double ${3:value2});
+endsnippet
+
+
+snippet fmod "Returns the real remainder after the division of two numbers"
+double ${1:result} = fmod(double ${2:value}, double ${3:value2});
+endsnippet
+
+
+snippet FolderClean "Deletes all files in the specified folder"
+bool ${1:result} = FolderClean(string ${2:folder_name}, int ${3:common_flag=0});
+endsnippet
+
+
+snippet FolderCreate "Creates a folder in the Files directory"
+bool ${1:result} = FolderCreate(string ${2:folder_name}, int ${3:common_flag=0});
+endsnippet
+
+
+snippet FolderDelete "Removes a selected directory. If the folder is not empty, then it can't be removed"
+bool ${1:result} = FolderDelete(string ${2:folder_name}, int ${3:common_flag=0});
+endsnippet
+
+
+snippet GetLastError "Returns the last error"
+int ${1:result} = GetLastError();
+endsnippet
+
+
+snippet GetPointer "Returns the object "
+void* ${1:result} = GetPointer(any_class ${2:anyobject});
+endsnippet
+
+
+snippet GetTickCount "Returns the number of milliseconds that have elapsed since the system was started"
+uint ${1:result} = GetTickCount();
+endsnippet
+
+
+snippet GlobalVariableCheck "Checks the existence of a global variable with the specified name"
+bool ${1:result} = GlobalVariableCheck(string ${2:name});
+endsnippet
+
+
+snippet GlobalVariableDel "Deletes a global variable"
+bool ${1:result} = GlobalVariableDel(string ${2:name});
+endsnippet
+
+
+snippet GlobalVariableGet "Returns the value of a global variable"
+double ${1:result} = GlobalVariableGet(string ${2:name});
+endsnippet
+
+
+snippet GlobalVariableName "Returns the name of a global variable by it's ordinal number in the list of global variables"
+string ${1:result} = GlobalVariableName(int ${2:index});
+endsnippet
+
+
+snippet GlobalVariablesDeleteAll "Deletes global variables with the specified prefix in their names"
+int ${1:result} = GlobalVariablesDeleteAll(string ${2:prefix_name=NULL}${3:,}datetime ${4:limit_data=0});
+endsnippet
+
+
+snippet GlobalVariableSet "Sets the new value to a global variable"
+datetime ${1:result} = GlobalVariableSet(string ${2:name}, double ${3:value});
+endsnippet
+
+
+snippet GlobalVariableSetOnCondition "Sets the new value of the existing global variable by condition"
+bool ${1:result} = GlobalVariableSetOnCondition(string ${2:name}, double ${3:value}, double ${4:check_value});
+endsnippet
+
+
+snippet GlobalVariablesFlush "Forcibly saves contents of all global variables to a disk"
+GlobalVariablesFlush();
+endsnippet
+
+
+snippet GlobalVariablesTotal "Returns the total number of global variables"
+int ${1:result} = GlobalVariablesTotal();
+endsnippet
+
+
+snippet GlobalVariableTemp "Sets the new value to a global variable, that exists only in the current session of the terminal"
+bool ${1:result} = GlobalVariableTemp(string ${2:name});
+endsnippet
+
+
+snippet GlobalVariableTime "Returns time of the last accessing the global variable"
+datetime ${1:result} = GlobalVariableTime(string ${2:name});
+endsnippet
+
+
+snippet HideTestIndicators "The function sets a flag hiding indicators called by the Expert Advisor"
+HideTestIndicators(bool ${1:hide});
+endsnippet
+
+
+snippet Hour "Returns the hour of the last known server time by the moment of the program start"
+int ${1:result} = Hour();
+endsnippet
+
+
+snippet iAC "Accelerator Oscillator"
+double ${1:result} = iAC(string ${2:symbol}, int ${3:timeframe}, int ${4:shift});
+endsnippet
+
+
+snippet iAD "Accumulation/Distribution"
+double ${1:result} = iAD(string ${2:symbol}, int ${3:timeframe}, int ${4:shift});
+endsnippet
+
+
+snippet iADX "Average Directional Index"
+double ${1:result} = iADX(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:applied_price}, int ${6:mode}, int ${7:shift});
+endsnippet
+
+
+snippet iAlligator "Alligator"
+double ${1:result} = iAlligator(string ${2:symbol}, int ${3:timeframe}, int ${4:jaw_period}, int ${5:jaw_shift}, int ${6:teeth_period}, int ${7:teeth_shift}, int ${8:lips_period}, int ${9:lips_shift}, int ${10:ma_method}, int ${11:applied_price}, int ${12:mode}, int ${13:shift});
+endsnippet
+
+
+snippet iAO "Awesome Oscillator"
+double ${1:result} = iAO(string ${2:symbol}, int ${3:timeframe}, int ${4:shift});
+endsnippet
+
+
+snippet iATR "Average True Range"
+double ${1:result} = iATR(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:shift});
+endsnippet
+
+
+snippet iBands "Bollinger Bands®"
+double ${1:result} = iBands(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, double ${5:deviation}, int ${6:bands_shift}, int ${7:applied_price}, int ${8:mode}, int ${9:shift});
+endsnippet
+
+
+snippet iBandsOnArray "Calculation of Bollinger Bands® indicator on data, stored in a numeric array"
+double ${1:result} = iBandsOnArray(double ${2:array[]}, int ${3:total}, int ${4:period}, double ${5:deviation}, int ${6:bands_shift}, int ${7:mode}, int ${8:shift});
+endsnippet
+
+
+snippet iBars "Returns the number of bars on the specified chart"
+int ${1:result} = iBars(string ${2:symbol}, int ${3:timeframe});
+endsnippet
+
+
+snippet iBarShift "Returns the index of the bar which covers the specified time"
+int ${1:result} = iBarShift(string ${2:symbol}, int ${3:timeframe}, datetime ${4:time}, ${5:}bool ${6:exact=false});
+endsnippet
+
+
+snippet iBearsPower "Bears Power"
+double ${1:result} = iBearsPower(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:applied_price}, int ${6:shift});
+endsnippet
+
+
+snippet iBullsPower "Bulls Power"
+double ${1:result} = iBullsPower(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:applied_price}, int ${6:shift});
+endsnippet
+
+
+snippet iBWMFI "Market Facilitation Index by Bill Williams"
+double ${1:result} = iBWMFI(string ${2:symbol}, int ${3:timeframe}, int ${4:shift});
+endsnippet
+
+
+snippet iCCI "Commodity Channel Index"
+double ${1:result} = iCCI(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:applied_price}, int ${6:shift});
+endsnippet
+
+
+snippet iCCIOnArray "Calculation of Commodity Channel Index indicator on data, stored in a numeric array"
+double ${1:result} = iCCIOnArray(double ${2:array[]}, int ${3:total}, int ${4:period}, int ${5:shift});
+endsnippet
+
+
+snippet iCustom "Custom indicator "
+double ${1:result} = iCustom(string ${2:symbol}, int ${3:timeframe}, string ${4:name}, ${5:...}int ${6:mode}, int ${7:shift});
+endsnippet
+
+
+snippet iDeMarker "DeMarker"
+double ${1:result} = iDeMarker(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:shift});
+endsnippet
+
+
+snippet iEnvelopes "Envelopes"
+double ${1:result} = iEnvelopes(string ${2:symbol}, int ${3:timeframe}, int ${4:ma_period}, int ${5:ma_method}, int ${6:ma_shift}, int ${7:applied_price}, double ${8:deviation}, int ${9:mode}, int ${10:shift});
+endsnippet
+
+
+snippet iEnvelopesOnArray "Calculation of Envelopes indicator on data, stored in a numeric array"
+double ${1:result} = iEnvelopesOnArray(double ${2:array[]}, int ${3:total}, int ${4:ma_period}, int ${5:ma_method}, int ${6:ma_shift}, double ${7:deviation}, int ${8:mode}, int ${9:shift});
+endsnippet
+
+
+snippet iForce "Force Index"
+double ${1:result} = iForce(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:ma_method}, int ${6:applied_price}, int ${7:shift});
+endsnippet
+
+
+snippet iFractals "Fractals"
+double ${1:result} = iFractals(string ${2:symbol}, int ${3:timeframe}, int ${4:mode}, int ${5:shift});
+endsnippet
+
+
+snippet iGator "Gator Oscillator"
+double ${1:result} = iGator(string ${2:symbol}, int ${3:timeframe}, int ${4:jaw_period}, int ${5:jaw_shift}, int ${6:teeth_period}, int ${7:teeth_shift}, int ${8:lips_period}, int ${9:lips_shift}, int ${10:ma_method}, int ${11:applied_price}, int ${12:mode}, int ${13:shift});
+endsnippet
+
+
+snippet iIchimoku "Ichimoku Kinko Hyo"
+double ${1:result} = iIchimoku(string ${2:symbol}, int ${3:timeframe}, int ${4:tenkan_sen}, int ${5:kijun_sen}, int ${6:senkou_span_b}, int ${7:mode}, int ${8:shift});
+endsnippet
+
+
+snippet iMA "Moving Average"
+double ${1:result} = iMA(string ${2:symbol}, int ${3:timeframe}, int ${4:ma_period}, int ${5:ma_shift}, int ${6:ma_method}, int ${7:applied_price}, int ${8:shift});
+endsnippet
+
+
+snippet iMACD "Moving Averages Convergence-Divergence"
+double ${1:result} = iMACD(string ${2:symbol}, int ${3:timeframe}, int ${4:fast_ema_period}, int ${5:slow_ema_period}, int ${6:signal_period}, int ${7:applied_price}, int ${8:mode}, int ${9:shift});
+endsnippet
+
+
+snippet iMAOnArray "Calculation of Moving Average indicator on data, stored in a numeric array"
+double ${1:result} = iMAOnArray(double ${2:array[]}, int ${3:total}, int ${4:ma_period}, int ${5:ma_shift}, int ${6:ma_method}, int ${7:shift});
+endsnippet
+
+
+snippet iMFI "Money Flow Index"
+double ${1:result} = iMFI(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:shift});
+endsnippet
+
+
+snippet iMomentum "Momentum"
+double ${1:result} = iMomentum(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:applied_price}, int ${6:shift});
+endsnippet
+
+
+snippet iMomentumOnArray "Calculation of Momentum indicator on data, stored in a numeric array"
+double ${1:result} = iMomentumOnArray(double ${2:array[]}, int ${3:total}, int ${4:period}, int ${5:shift});
+endsnippet
+
+
+snippet IndicatorBuffers "Allocates memory for buffers used for custom indicator calculations"
+bool ${1:result} = IndicatorBuffers(int ${2:count});
+endsnippet
+
+
+snippet IndicatorCounted "Returns the amount of bars not changed after the indicator had been launched last"
+int ${1:result} = IndicatorCounted();
+endsnippet
+
+
+snippet IndicatorDigits "Sets precision format to visualize indicator values"
+IndicatorDigits(int ${1:digits});
+endsnippet
+
+
+snippet IndicatorSetDouble "Sets the value of an indicator property of the "
+bool ${1:result} = IndicatorSetDouble(int ${2:prop_id}, double ${3:prop_value});
+endsnippet
+
+
+snippet IndicatorSetInteger "Sets the value of an indicator property of the "
+bool ${1:result} = IndicatorSetInteger(int ${2:prop_id}, int ${3:prop_value});
+endsnippet
+
+
+snippet IndicatorSetString "Sets the value of an indicator property of the "
+bool ${1:result} = IndicatorSetString(int ${2:prop_id}, string ${3:prop_value});
+endsnippet
+
+
+snippet IndicatorShortName "Sets the "short" name of a custom indicator to be shown in the DataWindow and in the chart subwindow"
+IndicatorShortName(string ${1:name});
+endsnippet
+
+
+snippet IntegerToString "Converting int into a string of preset length"
+string ${1:result} = IntegerToString(long ${2:number}, int ${3:str_len=0}, ushort ${4:fill_symbol=' '});
+endsnippet
+
+
+snippet iOBV "On Balance Volume"
+double ${1:result} = iOBV(string ${2:symbol}, int ${3:timeframe}, int ${4:applied_price}, int ${5:shift});
+endsnippet
+
+
+snippet iOsMA "Moving Average of Oscillator (MACD histogram)"
+double ${1:result} = iOsMA(string ${2:symbol}, int ${3:timeframe}, int ${4:fast_ema_period}, int ${5:slow_ema_period}, int ${6:signal_period}, int ${7:applied_price}, int ${8:shift});
+endsnippet
+
+
+snippet iRSI "Relative Strength Index"
+double ${1:result} = iRSI(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:applied_price}, int ${6:shift});
+endsnippet
+
+
+snippet iRSIOnArray "Calculation of Momentum indicator on data, stored in a numeric array"
+double ${1:result} = iRSIOnArray(double ${2:array[]}, int ${3:total}, int ${4:period}, int ${5:shift});
+endsnippet
+
+
+snippet iRVI "Relative Vigor Index"
+double ${1:result} = iRVI(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:mode}, int ${6:shift});
+endsnippet
+
+
+snippet iSAR "Parabolic Stop And Reverse System"
+double ${1:result} = iSAR(string ${2:symbol}, int ${3:timeframe}, double ${4:step}, double ${5:maximum}, maximum value of stepint ${6:shift});
+endsnippet
+
+
+snippet IsConnected "Checks connection between client terminal and server"
+bool ${1:result} = IsConnected();
+endsnippet
+
+
+snippet IsDemo "Checks if the Expert Advisor runs on a demo account"
+bool ${1:result} = IsDemo();
+endsnippet
+
+
+snippet IsDllsAllowed "Checks if the DLL function call is allowed for the Expert Advisor"
+bool ${1:result} = IsDllsAllowed();
+endsnippet
+
+
+snippet IsExpertEnabled "Checks if Expert Advisors are enabled for running"
+bool ${1:result} = IsExpertEnabled();
+endsnippet
+
+
+snippet IsLibrariesAllowed "Checks if the Expert Advisor can call library function"
+bool ${1:result} = IsLibrariesAllowed();
+endsnippet
+
+
+snippet IsOptimization "Checks if Expert Advisor runs in the Strategy Tester optimization mode"
+bool ${1:result} = IsOptimization();
+endsnippet
+
+
+snippet IsStopped "Returns true, if an mql4 program has been commanded to stop its operation"
+bool ${1:result} = IsStopped();
+endsnippet
+
+
+snippet iStdDev "Standard Deviation"
+double ${1:result} = iStdDev(string ${2:symbol}, int ${3:timeframe}, int ${4:ma_period}, int ${5:ma_shift}, int ${6:ma_method}, int ${7:applied_price}, int ${8:shift});
+endsnippet
+
+
+snippet iStdDevOnArray "Calculation of Standard Deviation indicator on data, stored in a numeric array"
+double ${1:result} = iStdDevOnArray(double ${2:array[]}, int ${3:total}, int ${4:ma_period}, int ${5:ma_shift}, int ${6:ma_method}, int ${7:shift});
+endsnippet
+
+
+snippet IsTesting "Checks if the Expert Advisor runs in the testing mode"
+bool ${1:result} = IsTesting();
+endsnippet
+
+
+snippet iStochastic "Stochastic Oscillator"
+double ${1:result} = iStochastic(string ${2:symbol}, int ${3:timeframe}, int ${4:Kperiod}, int ${5:Dperiod}, int ${6:slowing}, int ${7:method}, int ${8:price_field}, int ${9:mode}, int ${10:shift});
+endsnippet
+
+
+snippet IsTradeAllowed "Checks if the Expert Advisor is allowed to trade and trading context is not busy"
+bool ${1:result} = IsTradeAllowed();
+endsnippet
+
+
+snippet IsTradeContextBusy "Returns the information about trade context"
+bool ${1:result} = IsTradeContextBusy();
+endsnippet
+
+
+snippet IsVisualMode "Checks if the Expert Advisor is tested in visual mode"
+bool ${1:result} = IsVisualMode();
+endsnippet
+
+
+snippet iTime "Returns time value for the bar of specified symbol with timeframe and shift"
+datetime ${1:result} = iTime(string ${2:symbol}, int ${3:timeframe}, int ${4:shift});
+endsnippet
+
+
+snippet iVolume "Returns Tick Volume value for the bar of specified symbol with timeframe and shift"
+long ${1:result} = iVolume(string ${2:symbol}, int ${3:timeframe}, int ${4:shift});
+endsnippet
+
+
+snippet iWPR "Williams' Percent Range"
+double ${1:result} = iWPR(string ${2:symbol}, int ${3:timeframe}, int ${4:period}, int ${5:shift});
+endsnippet
+
+
+snippet log "Returns natural logarithm"
+double ${1:result} = log(double ${2:val});
+endsnippet
+
+
+snippet log10 "Returns the logarithm of a number by base 10"
+double ${1:result} = log10(double ${2:val});
+endsnippet
+
+
+snippet MarketInfo "Returns various data about securities listed in the "Market Watch" window"
+double ${1:result} = MarketInfo(string ${2:symbol}, int ${3:type});
+endsnippet
+
+
+snippet MathAbs "Returns absolute value (modulus) of the specified numeric value"
+double ${1:result} = MathAbs(double ${2:value});
+endsnippet
+
+
+snippet MathArccos "Returns the arc cosine of x in radians"
+double ${1:result} = MathArccos(double ${2:val});
+endsnippet
+
+
+snippet MathArcsin "Returns the arc sine of x in radians"
+double ${1:result} = MathArcsin(double ${2:val});
+endsnippet
+
+
+snippet MathArctan "Returns the arc tangent of x in radians"
+double ${1:result} = MathArctan(double ${2:value});
+endsnippet
+
+
+snippet MathCeil "Returns integer numeric value closest from above"
+double ${1:result} = MathCeil(double ${2:val});
+endsnippet
+
+
+snippet MathCos "Returns the cosine of a number"
+double ${1:result} = MathCos(double ${2:value});
+endsnippet
+
+
+snippet MathExp "Returns exponent of a number"
+double ${1:result} = MathExp(double ${2:value});
+endsnippet
+
+
+snippet MathFloor "Returns integer numeric value closest from below"
+double ${1:result} = MathFloor(double ${2:val});
+endsnippet
+
+
+snippet MathIsValidNumber "Checks the correctness of a real number"
+bool ${1:result} = MathIsValidNumber(double ${2:number});
+endsnippet
+
+
+snippet MathLog "Returns natural logarithm"
+double ${1:result} = MathLog(double ${2:val});
+endsnippet
+
+
+snippet MathLog10 "Returns the logarithm of a number by base 10"
+double ${1:result} = MathLog10(double ${2:val});
+endsnippet
+
+
+snippet MathMax "Returns the maximal value of the two numeric values"
+double ${1:result} = MathMax(double ${2:value1}, double ${3:value2});
+endsnippet
+
+
+snippet MathMin "Returns the minimal value of the two numeric values"
+double ${1:result} = MathMin(double ${2:value1}, double ${3:value2});
+endsnippet
+
+
+snippet MathMod "Returns the real remainder after the division of two numbers"
+double ${1:result} = MathMod(double ${2:value}, double ${3:value2});
+endsnippet
+
+
+snippet MathPow "Raises the base to the specified power"
+double ${1:result} = MathPow(double ${2:base}, double ${3:exponent});
+endsnippet
+
+
+snippet MathRand "Returns a pseudorandom value within the range of 0 to 32767"
+int ${1:result} = MathRand();
+endsnippet
+
+
+snippet MathRound "Rounds of a value to the nearest integer"
+double ${1:result} = MathRound(double ${2:value});
+endsnippet
+
+
+snippet MathSin "Returns the sine of a number"
+double ${1:result} = MathSin(double ${2:value});
+endsnippet
+
+
+snippet MathSqrt "Returns a square root"
+double ${1:result} = MathSqrt(double ${2:value});
+endsnippet
+
+
+snippet MathSrand "Sets the starting point for generating a series of pseudorandom integers"
+MathSrand(int ${1:seed});
+endsnippet
+
+
+snippet MathTan "Returns the tangent of a number"
+double ${1:result} = MathTan(double ${2:rad});
+endsnippet
+
+
+snippet MessageBox "Creates, displays a message box and manages it"
+int ${1:result} = MessageBox(string ${2:text}, string ${3:caption=NULL}, int ${4:flags=0});
+endsnippet
+
+
+snippet Minute "Returns the current minute of the last known server time by the moment of the program start"
+int ${1:result} = Minute();
+endsnippet
+
+
+snippet Month "Returns the current month as number, i.e., the number of month of the last known server time"
+int ${1:result} = Month();
+endsnippet
+
+
+snippet MQLInfoInteger "Returns an integer value of a corresponding property of a running mql4 program"
+int ${1:result} = MQLInfoInteger(int ${2:property_id});
+endsnippet
+
+
+snippet MQLInfoString "Returns a string value of a corresponding property of a running mql4 program"
+string ${1:result} = MQLInfoString(int ${2:property_id});
+endsnippet
+
+
+snippet MQLSetInteger "Sets the value of the MQL_CODEPAGE property in an MQL4 program environment"
+MQLSetInteger(int ${1:property_id}int ${2:property_value});
+endsnippet
+
+
+snippet NormalizeDouble "Rounding of a floating point number to a specified accuracy"
+double ${1:result} = NormalizeDouble(double ${2:value}, int ${3:digits});
+endsnippet
+
+
+snippet ObjectCreate "Creates an object of the specified type in a specified chart"
+bool ${1:result} = ObjectCreate(long ${2:chart_id}, string ${3:object_name}, ENUM_OBJECT ${4:object_type}, int ${5:sub_window}, datetime ${6:time1}, double ${7:price1}, datetime ${8:timeN=0}, double ${9:priceN=0});
+endsnippet
+
+
+snippet ObjectDelete "Removes the object having the specified name"
+bool ${1:result} = ObjectDelete(long ${2:chart_id}, string ${3:object_name});
+endsnippet
+
+
+snippet ObjectDescription "Returns the object description"
+string ${1:result} = ObjectDescription(string ${2:object_name});
+endsnippet
+
+
+snippet ObjectFind "Searches for an object having the specified name"
+int ${1:result} = ObjectFind(long ${2:chart_id}, string ${3:object_name});
+endsnippet
+
+
+snippet ObjectGet "Returns the value of the specified object property"
+double ${1:result} = ObjectGet(string ${2:object_name}, int ${3:index});
+endsnippet
+
+
+snippet ObjectGetDouble "Returns the double value of the corresponding object property"
+double ${1:result} = ObjectGetDouble(long ${2:chart_id}, string ${3:object_name}, int ${4:prop_id}, int ${5:prop_modifier=0});
+endsnippet
+
+
+snippet ObjectGetFiboDescription "Returns the level description of a Fibonacci object"
+string ${1:result} = ObjectGetFiboDescription(string ${2:object_name}, int ${3:index});
+endsnippet
+
+
+snippet ObjectGetInteger "Returns the integer value of the corresponding object property"
+long ${1:result} = ObjectGetInteger(long ${2:chart_id}, string ${3:object_name}, int ${4:prop_id}, int ${5:prop_modifier=0});
+endsnippet
+
+
+snippet ObjectGetShiftByValue "Calculates and returns bar index for the given price"
+int ${1:result} = ObjectGetShiftByValue(string ${2:object_name}, double ${3:value});
+endsnippet
+
+
+snippet ObjectGetString "Returns the string value of the corresponding object property"
+string ${1:result} = ObjectGetString(long ${2:chart_id}, string ${3:object_name}, int ${4:prop_id}, int ${5:prop_modifier=0});
+endsnippet
+
+
+snippet ObjectGetTimeByValue "Returns the time value for the specified object price value"
+datetime ${1:result} = ObjectGetTimeByValue(long ${2:chart_id}, string ${3:object_name}, double ${4:value}, int ${5:line_id=0});
+endsnippet
+
+
+snippet ObjectGetValueByShift "Calculates and returns the price value for the specified bar"
+double ${1:result} = ObjectGetValueByShift(string ${2:object_name}, int ${3:shift});
+endsnippet
+
+
+snippet ObjectGetValueByTime "Returns the price value of an object for the specified time"
+double ${1:result} = ObjectGetValueByTime(long ${2:chart_id}, string ${3:object_name}, datetime ${4:time}, int ${5:line_id=0});
+endsnippet
+
+
+snippet ObjectMove "Changes the coordinates of the specified object anchor point"
+bool ${1:result} = ObjectMove(string ${2:object_name}, int ${3:point_index}, datetime ${4:time}, double ${5:price});
+endsnippet
+
+
+snippet ObjectName "Returns the name of an object by its index in the objects list"
+string ${1:result} = ObjectName(int ${2:object_index});
+endsnippet
+
+
+snippet ObjectsDeleteAll "Removes all objects of the specified type from the specified chart subwindow"
+int ${1:result} = ObjectsDeleteAll(long ${2:chart_id}, int ${3:sub_window=EMPTY}, int ${4:object_type=EMPTY});
+endsnippet
+
+
+snippet ObjectSet "Changes the value of the specified object property"
+bool ${1:result} = ObjectSet(string ${2:object_name}, int ${3:index}, double ${4:value});
+endsnippet
+
+
+snippet ObjectSetDouble "Sets the value of the corresponding object property"
+bool ${1:result} = ObjectSetDouble(long ${2:chart_id}, string ${3:object_name}, int ${4:prop_id}, double ${5:prop_value});
+endsnippet
+
+
+snippet ObjectSetFiboDescription "Sets a new description to a level of a Fibonacci object"
+bool ${1:result} = ObjectSetFiboDescription(string ${2:object_name}, int ${3:index}, string ${4:text});
+endsnippet
+
+
+snippet ObjectSetInteger "Sets the value of the corresponding object property"
+bool ${1:result} = ObjectSetInteger(long ${2:chart_id}, string ${3:object_name}, int ${4:prop_id}, long ${5:prop_value});
+endsnippet
+
+
+snippet ObjectSetString "Sets the value of the corresponding object property"
+bool ${1:result} = ObjectSetString(long ${2:chart_id}, string ${3:object_name}, int ${4:prop_id}, string ${5:prop_value});
+endsnippet
+
+
+snippet ObjectSetText "Changes the object description"
+bool ${1:result} = ObjectSetText(string ${2:object_name}, string ${3:text}, int ${4:font_size=0}, string ${5:font_name=NULL}, color ${6:text_color=clrNONE});
+endsnippet
+
+
+snippet ObjectsTotal "Returns the number of objects of the specified type"
+int ${1:result} = ObjectsTotal(long ${2:chart_id}, int ${3:sub_window=-1}, int ${4:type=-1});
+endsnippet
+
+
+snippet ObjectType "Returns the object type"
+int ${1:result} = ObjectType(string ${2:object_name});
+endsnippet
+
+
+snippet OrderClose "Closes opened order"
+bool ${1:result} = OrderClose(int ${2:ticket}${3:,}double ${4:lots}${5:,}${6:}double ${7:price}${8:,}${9:}int ${10:slippage}${11:,}${12:}color ${13:arrow_color});
+endsnippet
+
+
+snippet OrderCloseBy "Closes an opened order by another opposite opened order"
+bool ${1:result} = OrderCloseBy(int ${2:ticket}${3:,}int ${4:opposite}${5:,}${6:}color ${7:arrow_color});
+endsnippet
+
+
+snippet OrderClosePrice "Returns close price of the currently selected order"
+double ${1:result} = OrderClosePrice();
+endsnippet
+
+
+snippet OrderCloseTime "Returns close time of the currently selected order"
+datetime ${1:result} = OrderCloseTime();
+endsnippet
+
+
+snippet OrderComment "Returns comment of the currently selected order"
+string ${1:result} = OrderComment();
+endsnippet
+
+
+snippet OrderCommission "Returns calculated commission of the currently selected order"
+double ${1:result} = OrderCommission();
+endsnippet
+
+
+snippet OrderDelete "Deletes previously opened pending order"
+bool ${1:result} = OrderDelete(int ${2:ticket}${3:,}color ${4:arrow_color});
+endsnippet
+
+
+snippet OrderExpiration "Returns expiration date of the selected pending order"
+datetime ${1:result} = OrderExpiration();
+endsnippet
+
+
+snippet OrderLots "Returns amount of lots of the selected order"
+double ${1:result} = OrderLots();
+endsnippet
+
+
+snippet OrderMagicNumber "Returns an identifying (magic) number of the currently selected order"
+int ${1:result} = OrderMagicNumber();
+endsnippet
+
+
+snippet OrderModify "Modification of characteristics of the previously opened or pending orders"
+bool ${1:result} = OrderModify(int ${2:ticket}${3:,}double ${4:price}${5:,}${6:}double ${7:stoploss}${8:,}${9:}double ${10:takeprofit}${11:,}${12:}datetime ${13:expiration}${14:,}${15:}color ${16:arrow_color});
+endsnippet
+
+
+snippet OrderOpenPrice "Returns open price of the currently selected order"
+double ${1:result} = OrderOpenPrice();
+endsnippet
+
+
+snippet OrderOpenTime "Returns open time of the currently selected order"
+datetime ${1:result} = OrderOpenTime();
+endsnippet
+
+
+snippet OrderPrint "Prints information about the selected order in the log"
+OrderPrint();
+endsnippet
+
+
+snippet OrderProfit "Returns profit of the currently selected order"
+double ${1:result} = OrderProfit();
+endsnippet
+
+
+snippet OrderSelect "The function selects an order for further processing"
+bool ${1:result} = OrderSelect(int ${2:index}, int ${3:select}, int ${4:pool=MODE_TRADES});
+endsnippet
+
+
+snippet OrderSend "The main function used to open an order or place a pending order"
+int ${1:result} = OrderSend(string ${2:symbol}${3:,}int ${4:cmd}${5:,}${6:}double ${7:volume}${8:,}double ${9:price}${10:,}int ${11:slippage}${12:,}double ${13:stoploss}${14:,}${15:}double ${16:takeprofit}${17:,}string ${18:comment=NULL}${19:,}int ${20:magic=0}${21:,}datetime ${22:expiration=0}${23:,}${24:}color ${25:arrow_color=clrNONE}${26:});
+endsnippet
+
+
+snippet OrdersHistoryTotal "Returns the number of closed orders in the account history loaded into the terminal"
+int ${1:result} = OrdersHistoryTotal();
+endsnippet
+
+
+snippet OrderStopLoss "Returns stop loss value of the currently selected order"
+double ${1:result} = OrderStopLoss();
+endsnippet
+
+
+snippet OrdersTotal "Returns the number of market and pending orders"
+int ${1:result} = OrdersTotal();
+endsnippet
+
+
+snippet OrderSwap "Returns swap value of the currently selected order"
+double ${1:result} = OrderSwap();
+endsnippet
+
+
+snippet OrderSymbol "Returns symbol name of the currently selected order"
+string ${1:result} = OrderSymbol();
+endsnippet
+
+
+snippet OrderTakeProfit "Returns take profit value of the currently selected order"
+double ${1:result} = OrderTakeProfit();
+endsnippet
+
+
+snippet OrderTicket "Returns ticket number of the currently selected order"
+int ${1:result} = OrderTicket();
+endsnippet
+
+
+snippet OrderType "Returns order operation type of the currently selected order"
+int ${1:result} = OrderType();
+endsnippet
+
+
+snippet Period "Returns the current chart timeframe"
+int ${1:result} = Period();
+endsnippet
+
+
+snippet Period "Returns timeframe of the current chart"
+int ${1:result} = Period();
+endsnippet
+
+
+snippet PeriodSeconds "Returns the number of seconds in the period"
+int ${1:result} = PeriodSeconds(ENUM_TIMEFRAMES ${2:period=PERIOD_CURRENT});
+endsnippet
+
+
+snippet PlaySound "Plays a sound file"
+bool ${1:result} = PlaySound(string ${2:filename});
+endsnippet
+
+
+snippet Point "Returns the point size of the current symbol in the quote currency"
+double ${1:result} = Point();
+endsnippet
+
+
+snippet pow "Raises the base to the specified power"
+double ${1:result} = pow(double ${2:base}, double ${3:exponent});
+endsnippet
+
+
+snippet Print "Displays a message in the log"
+Print(${1:argument}, ${2:...});
+endsnippet
+
+
+snippet PrintFormat "Formats and prints the sets of symbols and values in a log file in accordance with a preset format"
+PrintFormat(string ${1:format_string}, ${2:...});
+endsnippet
+
+
+snippet rand "Returns a pseudorandom value within the range of 0 to 32767"
+int ${1:result} = rand();
+endsnippet
+
+
+snippet RefreshRates "Refreshing of data in pre-defined variables and series arrays"
+bool ${1:result} = RefreshRates();
+endsnippet
+
+
+snippet ResetLastError "Sets the value of a predetermined variable "
+ResetLastError();
+endsnippet
+
+
+snippet ResourceCreate "Creates an image resource based on a data set"
+bool ${1:result} = ResourceCreate(const string ${2:resource_name}, const string ${3:path});
+endsnippet
+
+
+snippet ResourceFree "Deletes "
+bool ${1:result} = ResourceFree(const string ${2:resource_name});
+endsnippet
+
+
+snippet ResourceReadImage "Reads data from the graphical resource "
+bool ${1:result} = ResourceReadImage(const string ${2:resource_name}, uint& ${3:data[]}, uint& ${4:width}, ${5:}uint& ${6:height});
+endsnippet
+
+
+snippet ResourceSave "Saves a resource into the specified file"
+bool ${1:result} = ResourceSave(const string ${2:resource_name}, const string ${3:file_name});
+endsnippet
+
+
+snippet round "Rounds of a value to the nearest integer"
+double ${1:result} = round(double ${2:value});
+endsnippet
+
+
+snippet Seconds "Returns the amount of seconds elapsed from the beginning of the current minute of the last known server time by the moment of the program start"
+int ${1:result} = Seconds();
+endsnippet
+
+
+snippet SendFTP "Sends a file at the address specified in the settings window of the "FTP" tab"
+bool ${1:result} = SendFTP(string ${2:filename}, string ${3:ftp_path=NULL});
+endsnippet
+
+
+snippet SendMail "Sends an email at the address specified in the settings window of the "Email" tab"
+bool ${1:result} = SendMail(string ${2:subject}, string ${3:some_text});
+endsnippet
+
+
+snippet SendNotification "Sends push notifications to mobile terminals, whose MetaQuotes ID are specified in the "Notifications" tab"
+bool ${1:result} = SendNotification(string ${2:text});
+endsnippet
+
+
+snippet SeriesInfoInteger "Returns information about the state of historical data"
+long ${1:result} = SeriesInfoInteger(string ${2:symbol_name}, ENUM_TIMEFRAMES ${3:timeframe}, ENUM_SERIES_INFO_INTEGER ${4:prop_id});
+endsnippet
+
+
+snippet SetIndexArrow "Sets an arrow symbol for indicators line of the DRAW_ARROW type"
+SetIndexArrow(int ${1:index}, int ${2:code});
+endsnippet
+
+
+snippet SetIndexBuffer "Binds the specified indicator buffer with one-dimensional dynamic "
+bool ${1:result} = SetIndexBuffer(int ${2:index}, double ${3:buffer[]}, ENUM_INDEXBUFFER_TYPE ${4:data_type});
+endsnippet
+
+
+snippet SetIndexDrawBegin "Sets the bar number from which the drawing of the given indicator line must start"
+SetIndexDrawBegin(int ${1:index}, int ${2:begin});
+endsnippet
+
+
+snippet SetIndexEmptyValue "Sets drawing line empty value"
+SetIndexEmptyValue(int ${1:index}, double ${2:value});
+endsnippet
+
+
+snippet SetIndexLabel "Sets drawing line description for showing in the DataWindow and in the tooltip"
+SetIndexLabel(int ${1:index}, string ${2:text});
+endsnippet
+
+
+snippet SetIndexShift "Sets offset for the drawing line"
+SetIndexShift(int ${1:index}, int ${2:shift});
+endsnippet
+
+
+snippet SetIndexStyle "Sets the new type, style, width and color for a given indicator line"
+SetIndexStyle(int ${1:index}, int ${2:type}, int ${3:style=EMPTY}, int ${4:width=EMPTY}, color ${5:clr=clrNONE});
+endsnippet
+
+
+snippet SetLevelStyle "Sets a new style, width and color of horizontal levels of indicator to be output in a separate window"
+SetLevelStyle(int ${1:draw_style}, int ${2:line_width}, color ${3:clr});
+endsnippet
+
+
+snippet SetLevelValue "Sets a value for a given horizontal level of the indicator to be output in a separate window"
+SetLevelValue(int ${1:level}, double ${2:value});
+endsnippet
+
+
+snippet ShortArrayToString "Copying array part into a string"
+string ${1:result} = ShortArrayToString(ushort ${2:array[]}, int ${3:start=0}, int ${4:count=-1});
+endsnippet
+
+
+snippet ShortToString "Converting symbol code (unicode) into one-symbol string"
+string ${1:result} = ShortToString(ushort ${2:symbol_code});
+endsnippet
+
+
+snippet SignalBaseGetDouble "Returns the value of double type property for selected signal"
+double ${1:result} = SignalBaseGetDouble(ENUM_SIGNAL_BASE_DOUBLE ${2:property_id});
+endsnippet
+
+
+snippet SignalBaseGetInteger "Returns the value of integer type property for selected signal"
+long ${1:result} = SignalBaseGetInteger(ENUM_SIGNAL_BASE_INTEGER ${2:property_id});
+endsnippet
+
+
+snippet SignalBaseGetString "Returns the value of string type property for selected signal"
+string ${1:result} = SignalBaseGetString(ENUM_SIGNAL_BASE_STRING ${2:property_id});
+endsnippet
+
+
+snippet SignalBaseSelect "Selects a signal from signals, available in terminal for further working with it "
+bool ${1:result} = SignalBaseSelect(int ${2:index});
+endsnippet
+
+
+snippet SignalBaseTotal "Returns the total amount of signals, available in terminal"
+int ${1:result} = SignalBaseTotal();
+endsnippet
+
+
+snippet SignalInfoGetDouble "Returns the value of double type property of signal copy settings "
+double ${1:result} = SignalInfoGetDouble(ENUM_SIGNAL_INFO_DOUBLE ${2:property_id});
+endsnippet
+
+
+snippet SignalInfoGetInteger "Returns the value of integer type property of signal copy settings "
+long ${1:result} = SignalInfoGetInteger(ENUM_SIGNAL_INFO_INTEGER ${2:property_id});
+endsnippet
+
+
+snippet SignalInfoGetString "Returns the value of string type property of signal copy settings "
+string ${1:result} = SignalInfoGetString(ENUM_SIGNAL_INFO_STRING ${2:property_id});
+endsnippet
+
+
+snippet SignalInfoSetDouble "Sets the value of double type property of signal copy settings"
+bool ${1:result} = SignalInfoSetDouble(ENUM_SIGNAL_INFO_DOUBLE ${2:property_id}, double ${3:value});
+endsnippet
+
+
+snippet SignalInfoSetInteger "Sets the value of integer type property of signal copy settings"
+bool ${1:result} = SignalInfoSetInteger(ENUM_SIGNAL_INFO_INTEGER ${2:property_id}, long ${3:value});
+endsnippet
+
+
+snippet SignalSubscribe "Subscribes to the trading signal"
+bool ${1:result} = SignalSubscribe(long ${2:signal_id});
+endsnippet
+
+
+snippet SignalUnsubscribe "Cancels subscription"
+bool ${1:result} = SignalUnsubscribe();
+endsnippet
+
+
+snippet sin "Returns the sine of a number"
+double ${1:result} = sin(double ${2:value});
+endsnippet
+
+
+snippet Sleep "Suspends execution of the current Expert Advisor or script within a specified interval"
+Sleep(int ${1:milliseconds});
+endsnippet
+
+
+snippet sqrt "Returns a square root"
+double ${1:result} = sqrt(double ${2:value});
+endsnippet
+
+
+snippet srand "Sets the starting point for generating a series of pseudorandom integers"
+srand(int ${1:seed});
+endsnippet
+
+
+snippet StringAdd "Adds a string to the end of another string"
+bool ${1:result} = StringAdd(string& ${2:string_var}, string ${3:add_substring});
+endsnippet
+
+
+snippet StringBufferLen "Returns the size of buffer allocated for the string"
+int ${1:result} = StringBufferLen(string ${2:string_var})
+endsnippet
+
+
+snippet StringCompare "Compares two strings and returns 1 if the first string is greater than the second; 0 - if the strings are equal; -1 (minus 1) - if the first string is less than the second one"
+int ${1:result} = StringCompare(const string& ${2:string1}, const string& ${3:string2}, bool ${4:case_sensitive=true});
+endsnippet
+
+
+snippet StringConcatenate "Forms a string of parameters passed"
+string ${1:result} = StringConcatenate(void ${2:argument1}, ${3:}${4:}void ${5:argument2}, ${6:...});
+endsnippet
+
+
+snippet StringFill "Fills out a specified string by selected symbols"
+bool ${1:result} = StringFill(string& ${2:string_var}, ushort ${3:character});
+endsnippet
+
+
+snippet StringFind "Search for a substring in a string"
+int ${1:result} = StringFind(string ${2:string_value}, string ${3:match_substring}, int ${4:start_pos=0});
+endsnippet
+
+
+snippet StringFormat "Converting number into string according to preset format"
+string ${1:result} = StringFormat(string ${2:format}, ... ${3:...});
+endsnippet
+
+
+snippet StringGetChar "Returns character (code) from the specified position in the string"
+ushort ${1:result} = StringGetChar(string ${2:string_value}, int ${3:pos});
+endsnippet
+
+
+snippet StringGetCharacter "Returns the value of a number located in the specified string position"
+ushort ${1:result} = StringGetCharacter(string ${2:string_value}, int ${3:pos});
+endsnippet
+
+
+snippet StringInit "Initializes string by specified symbols and provides the specified string length"
+bool ${1:result} = StringInit(string& ${2:string_var}, int ${3:new_len=0}, ushort ${4:character=0});
+endsnippet
+
+
+snippet StringLen "Returns the number of symbols in a string"
+int ${1:result} = StringLen(string ${2:string_value});
+endsnippet
+
+
+snippet StringReplace " Replaces all the found substrings of a string by a set sequence of symbols"
+int ${1:result} = StringReplace(string& ${2:str}, const string ${3:find}, const string ${4:replacement});
+endsnippet
+
+
+snippet StringSetChar "Returns the string copy with changed character in the specified position"
+string ${1:result} = StringSetChar(string ${2:string_var}, int ${3:pos}, ushort ${4:value});
+endsnippet
+
+
+snippet StringSetCharacter "Returns true is a symbol is successfully inserted to the passed string."
+bool ${1:result} = StringSetCharacter(string& ${2:string_var}, int ${3:pos}, ushort ${4:character});
+endsnippet
+
+
+snippet StringSplit "Gets substrings by a specified separator from the specified string, returns the number of substrings obtained"
+int ${1:result} = StringSplit(const string ${2:string_value}, const ushort ${3:separator}, string & ${4:result[]});
+endsnippet
+
+
+snippet StringSubstr "Extracts a substring from a text string starting from a specified position"
+string ${1:result} = StringSubstr(string ${2:string_value}, int ${3:start_pos}, int ${4:length=0});
+endsnippet
+
+
+snippet StringToCharArray "Symbol-wise copying a string converted from Unicode to ANSI, to a selected place of array of uchar type"
+int ${1:result} = StringToCharArray(string ${2:text_string}, uchar& ${3:array[]}, int ${4:start=0}, int ${5:count=-1}, uint ${6:codepage=CP_ACP});
+endsnippet
+
+
+snippet StringToColor "Converting "R,G,B" string or string with color name into color type value"
+color ${1:result} = StringToColor(string ${2:color_string});
+endsnippet
+
+
+snippet StringToDouble "Converting a string containing a symbol representation of number into number of double type"
+double ${1:result} = StringToDouble(string ${2:value});
+endsnippet
+
+
+snippet StringToInteger "Converting a string containing a symbol representation of number into number of int type"
+long ${1:result} = StringToInteger(string ${2:value});
+endsnippet
+
+
+snippet StringToLower "Transforms all symbols of a selected string to lowercase by location"
+bool ${1:result} = StringToLower(string& ${2:string_var});
+endsnippet
+
+
+snippet StringToShortArray "Symbol-wise copying a string to a selected part of array of ushort type"
+int ${1:result} = StringToShortArray(string ${2:text_string}, ushort& ${3:array[]}, int ${4:start=0}, int ${5:count=-1});
+endsnippet
+
+
+snippet StringToTime "Converting a string containing time or date in "yyyy.mm.dd [hh:mi]" format into datetime type"
+datetime ${1:result} = StringToTime(string ${2:value});
+endsnippet
+
+
+snippet StringToUpper "Transforms all symbols of a selected string into capitals by location"
+bool ${1:result} = StringToUpper(string& ${2:string_var});
+endsnippet
+
+
+snippet StringTrimLeft "Cuts line feed characters, spaces and tabs in the left part of the string"
+string ${1:result} = StringTrimLeft(const string ${2:text});
+endsnippet
+
+
+snippet StringTrimRight "Cuts line feed characters, spaces and tabs in the right part of the string"
+string ${1:result} = StringTrimRight(const string ${2:text});
+endsnippet
+
+
+snippet StrToDouble "Converts string representation of number to double type"
+double ${1:result} = StrToDouble(string ${2:value});
+endsnippet
+
+
+snippet StrToInteger "Converts string containing the value character representation into a value of the integer type"
+int ${1:result} = StrToInteger(string ${2:value});
+endsnippet
+
+
+snippet StrToTime "Converts string in the format "yyyy.mm.dd hh:mi" to datetime type"
+datetime ${1:result} = StrToTime(string ${2:value});
+endsnippet
+
+
+snippet StructToTime "Converts a variable of MqlDateTime structure type into a datetime value"
+datetime ${1:result} = StructToTime(MqlDateTime$ ${2:dt_struct});
+endsnippet
+
+
+snippet Symbol "Returns the name of a symbol of the current chart"
+string ${1:result} = Symbol();
+endsnippet
+
+
+snippet Symbol "Returns a text string with the name of the current financial instrument"
+string ${1:result} = Symbol();
+endsnippet
+
+
+snippet SymbolInfoDouble "Returns the double value of the symbol for the corresponding property"
+double ${1:result} = SymbolInfoDouble(string ${2:name}, ENUM_SYMBOL_INFO_DOUBLE ${3:prop_id});
+endsnippet
+
+
+snippet SymbolInfoInteger "Returns a value of an integer type (long, datetime, int or bool) of a specified symbol for the corresponding property"
+long ${1:result} = SymbolInfoInteger(string ${2:name}, ENUM_SYMBOL_INFO_INTEGER ${3:prop_id});
+endsnippet
+
+
+snippet SymbolInfoSessionQuote "Allows receiving time of beginning and end of the specified quoting sessions for a specified symbol and "
+bool ${1:result} = SymbolInfoSessionQuote(string ${2:name}, ENUM_DAY_OF_WEEK ${3:day_of_week}, uint ${4:session_index}, datetime& ${5:from}, datetime& ${6:to});
+endsnippet
+
+
+snippet SymbolInfoSessionTrade "Allows receiving time of beginning and end of the specified trading sessions for a specified symbol and "
+bool ${1:result} = SymbolInfoSessionTrade(string ${2:name}, ENUM_DAY_OF_WEEK ${3:day_of_week}, uint ${4:session_index}, datetime& ${5:from}, datetime& ${6:to});
+endsnippet
+
+
+snippet SymbolInfoString "Returns a value of the string type of a specified symbol for the corresponding property"
+string ${1:result} = SymbolInfoString(string ${2:name}, ENUM_SYMBOL_INFO_STRING ${3:prop_id});
+endsnippet
+
+
+snippet SymbolInfoTick "Returns the current prices for the specified symbol in a variable of the "
+bool ${1:result} = SymbolInfoTick(string ${2:symbol}, MqlTick& ${3:tick});
+endsnippet
+
+
+snippet SymbolName "Returns the name of a specified symbol"
+string ${1:result} = SymbolName(int ${2:pos}, bool ${3:selected});
+endsnippet
+
+
+snippet SymbolSelect "Selects a symbol in the Market Watch window or removes a symbol from the window"
+bool ${1:result} = SymbolSelect(string ${2:name}, bool ${3:select});
+endsnippet
+
+
+snippet SymbolsTotal "Returns the number of available (selected in Market Watch or all) symbols"
+int ${1:result} = SymbolsTotal(bool ${2:selected});
+endsnippet
+
+
+snippet tan "Returns the tangent of a number"
+double ${1:result} = tan(double ${2:rad});
+endsnippet
+
+
+snippet TerminalClose "Commands the terminal to complete operation"
+bool ${1:result} = TerminalClose(int ${2:}${3:ret_code});
+endsnippet
+
+
+snippet TerminalCompany "Returns the name of company owning the client terminal"
+string ${1:result} = TerminalCompany();
+endsnippet
+
+
+snippet TerminalInfoDouble "Returns an double value of a corresponding property of a running mql4 program"
+double ${1:result} = TerminalInfoDouble(int ${2:property_id});
+endsnippet
+
+
+snippet TerminalInfoInteger "Returns an integer value of a corresponding property of a running mql4 program"
+int ${1:result} = TerminalInfoInteger(int ${2:property_id});
+endsnippet
+
+
+snippet TerminalInfoString "Returns a string value of a corresponding property of a running mql4 program"
+string ${1:result} = TerminalInfoString(int ${2:property_id});
+endsnippet
+
+
+snippet TerminalName "Returns client terminal name"
+string ${1:result} = TerminalName();
+endsnippet
+
+
+snippet TerminalPath "Returns the directory, from which the client terminal was launched"
+string ${1:result} = TerminalPath();
+endsnippet
+
+
+snippet TesterStatistics "It returns the value of a specified statistic calculated based on testing results"
+double ${1:result} = TesterStatistics(ENUM_STATISTICS ${2:}${3:statistic_id});
+endsnippet
+
+
+snippet TextGetSize "Returns the string's width and height at the current "
+bool ${1:result} = TextGetSize(const string ${2:text}, uint& ${3:width}, uint& ${4:height});
+endsnippet
+
+
+snippet TextOut "Transfers the text to the custom array (buffer) designed for creation of a graphical "
+bool ${1:result} = TextOut(const string ${2:text}, int ${3:x}, int ${4:y}, uint ${5:anchor}, uint ${6:&data[]}, uint ${7:width}, uint ${8:height}, uint ${9:color}, ENUM_COLOR_FORMAT ${10:color_format});
+endsnippet
+
+
+snippet TextSetFont "Sets the font for displaying the text using drawing methods (Arial 20 used by default)"
+bool ${1:result} = TextSetFont(const string ${2:name}, int ${3:size}, uint ${4:flags=0}, int ${5:orientation=0});
+endsnippet
+
+
+snippet TimeCurrent "Returns the last known server time (time of the last quote receipt) in the datetime format"
+datetime ${1:result} = TimeCurrent();
+endsnippet
+
+
+snippet TimeDay "Returns the day of month of the specified date"
+int ${1:result} = TimeDay(datetime ${2:date});
+endsnippet
+
+
+snippet TimeDaylightSavings "Returns the sign of Daylight Saving Time switch"
+int ${1:result} = TimeDaylightSavings();
+endsnippet
+
+
+snippet TimeDayOfWeek "Returns the zero-based day of week of the specified date"
+int ${1:result} = TimeDayOfWeek(datetime ${2:date});
+endsnippet
+
+
+snippet TimeDayOfYear "Returns the day of year of the specified date"
+int ${1:result} = TimeDayOfYear(datetime ${2:date});
+endsnippet
+
+
+snippet TimeGMT "Returns GMT in datetime format with the Daylight Saving Time by local time of the computer, where the client terminal is running"
+datetime ${1:result} = TimeGMT();
+endsnippet
+
+
+snippet TimeGMTOffset "Returns the current difference between GMT time and the local computer time in seconds, taking into account DST switch"
+int ${1:result} = TimeGMTOffset();
+endsnippet
+
+
+snippet TimeHour "Returns the hour of the specified time"
+int ${1:result} = TimeHour(datetime ${2:date});
+endsnippet
+
+
+snippet TimeLocal "Returns the local computer time in datetime format"
+datetime ${1:result} = TimeLocal();
+endsnippet
+
+
+snippet TimeMinute "Returns the minute of the specified time"
+int ${1:result} = TimeMinute(datetime ${2:date});
+endsnippet
+
+
+snippet TimeMonth "Returns the month number of the specified time"
+int ${1:result} = TimeMonth(datetime ${2:date});
+endsnippet
+
+
+snippet TimeSeconds "Returns the amount of seconds elapsed from the beginning of the minute of the specified time"
+int ${1:result} = TimeSeconds(datetime ${2:date});
+endsnippet
+
+
+snippet TimeToStr "Converts value of datetime type into a string of "yyyy.mm.dd hh:mi" format"
+string ${1:result} = TimeToStr(datetime ${2:value}, int ${3:mode=TIME_DATE|TIME_MINUTES});
+endsnippet
+
+
+snippet TimeToString "Converting a value containing time in seconds elapsed since 01.01.1970 into a string of "yyyy.mm.dd hh:mi" format"
+string ${1:result} = TimeToString(datetime ${2:value}, int ${3:mode=TIME_DATE|TIME_MINUTES});
+endsnippet
+
+
+snippet TimeToStruct "Converts a datetime value into a variable of MqlDateTime structure type"
+TimeToStruct(datetime ${1:dt}, MqlDateTime& ${2:dt_struct});
+endsnippet
+
+
+snippet TimeYear "Returns year of the specified date"
+int ${1:result} = TimeYear(datetime ${2:date});
+endsnippet
+
+
+snippet UninitializeReason "Returns the code of the reason for deinitialization"
+int ${1:result} = UninitializeReason();
+endsnippet
+
+
+snippet WebRequest "Sends HTTP request to the specified server"
+int ${1:result} = WebRequest(const string ${2:method}, const string ${3:url}, const string ${4:cookie}, const string ${5:referer}, int ${6:timeout}, ${7:}const char ${8:&data[]}, int ${9:data_size}, ${10:}char ${11:&result[]}, ${12:}string ${13:&result_headers});
+endsnippet
+
+
+snippet WindowBarsPerChart "Returns the amount of bars visible on the chart"
+int ${1:result} = WindowBarsPerChart();
+endsnippet
+
+
+snippet WindowExpertName "Returns the name of the executed Expert Advisor, script, custom indicator, or library"
+string ${1:result} = WindowExpertName();
+endsnippet
+
+
+snippet WindowFind "Returns the window index containing this specified indicator"
+int ${1:result} = WindowFind(string ${2:name});
+endsnippet
+
+
+snippet WindowFirstVisibleBar "Returns index of the first visible bar in the current chart window"
+int ${1:result} = WindowFirstVisibleBar();
+endsnippet
+
+
+snippet WindowHandle "Returns the system handle of the chart window"
+int ${1:result} = WindowHandle(string ${2:symbol}, int ${3:timeframe});
+endsnippet
+
+
+snippet WindowIsVisible "Returns the visibility flag of the chart subwindow"
+int ${1:result} = WindowIsVisible(int ${2:index});
+endsnippet
+
+
+snippet WindowOnDropped "Returns the window index where Expert Advisor, custom indicator or script was dropped"
+int ${1:result} = WindowOnDropped();
+endsnippet
+
+
+snippet WindowPriceMax "Returns the maximal value of the vertical scale of the specified subwindow of the current chart"
+int ${1:result} = WindowPriceMax(int ${2:index=0});
+endsnippet
+
+
+snippet WindowPriceMin "Returns the minimal value of the vertical scale of the specified subwindow of the current chart"
+int ${1:result} = WindowPriceMin(int ${2:index=0});
+endsnippet
+
+
+snippet WindowPriceOnDropped "Returns the price of the chart point where Expert Advisor or script was dropped"
+double ${1:result} = WindowPriceOnDropped();
+endsnippet
+
+
+snippet WindowRedraw "Redraws the current chart forcedly"
+WindowRedraw();
+endsnippet
+
+
+snippet WindowScreenShot "Saves current chart screen shot as a GIF, PNG or BMP file depending on specified extension"
+bool ${1:result} = WindowScreenShot(string ${2:filename}, int ${3:size_x}, int ${4:size_y}, int ${5:start_bar=-1}, int ${6:chart_scale=-1}, int ${7:chart_mode=-1});
+endsnippet
+
+
+snippet WindowsTotal "Returns total number of indicator windows on the chart"
+int ${1:result} = WindowsTotal();
+endsnippet
+
+
+snippet WindowTimeOnDropped "Returns the time of the chart point where Expert Advisor or script was dropped"
+datetime ${1:result} = WindowTimeOnDropped();
+endsnippet
+
+
+snippet WindowXOnDropped "Returns the value at X axis in pixels for the chart window client area point at which the Expert Advisor or script was dropped"
+int ${1:result} = WindowXOnDropped();
+endsnippet
+
+
+snippet WindowYOnDropped "Returns the value at Y axis in pixels for the chart window client area point at which the Expert Advisor or script was dropped"
+int ${1:result} = WindowYOnDropped();
+endsnippet
+
+
+snippet Year "Returns the current year, i.e., the year of the last known server time"
+int ${1:result} = Year();
+endsnippet
+
+
+snippet ZeroMemory "Resets a variable passed to it by reference. The variable can be of any type, except for classes and structures that have constructors."
+ZeroMemory(void &${1:variable});
+endsnippet
