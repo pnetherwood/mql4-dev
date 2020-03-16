@@ -5,8 +5,8 @@ IF "%MT4_HOME%"=="" (
   exit
 )
 
-set METAEDITOR=%MT4_HOME%"\metaeditor.exe"
-set METAINCLUDE=%MT4_HOME%"\MQL4"
+set METAEDITOR="%MT4_HOME%\metaeditor.exe"
+set METAINCLUDE="%MT4_HOME%\MQL4"
 set "LOGFILE=%~dpn1.log"
 
 :: Compile
