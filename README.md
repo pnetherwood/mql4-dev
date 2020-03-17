@@ -68,22 +68,8 @@ Once you have tags you can use tagbar:
 ```
 Plug 'majutsushi/tagbar'
 ```
-and configure to recognise mql4 tags using:
+For MQL4 files tagbar will show classes, members, functions, variables, macros and enums.
 
-```vim
-let g:tagbar_type_mql4 = {
-    \ 'ctagstype': 'C++',
-    \ 'kinds' : [
-        \'c:class',
-        \'m:members',
-        \'f:functions',
-        \'v:variables',
-        \'d:macros',
-        \'e:enums',
-        \'g:enum'
-    \]
-\}
-```
 ### Omni Completion
 Completion of MQL4 classes members and variables is improved using the C++ omni completion. 
 Install using:
