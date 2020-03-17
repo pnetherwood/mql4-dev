@@ -36,8 +36,8 @@ Compilation is done using the scripts in bin. The scripts require MT4_HOME envir
 | Key | Description |
 |-----|-------------|
 |K    |Launch MT4 help on current word|
-|<F10>|Call make to build all using makefile. See makefile.mk for makefile template|
-|<F11>|Compile|
+|F10|Call make to build all using makefile. See makefile.mk for makefile template|
+|F11|Compile|
 
 Note: to launch the MT4 Help keyhh.exe needs to be installed. See http://keyworks.helpmvp.com/
 
@@ -94,3 +94,5 @@ This plugin set this omni completion option by default for mql4 files.
 
 ### Makefiles
 Makefiles can be used to launch the compiler. Included with this code is a makefile template which can be included in a Makefile in the same folder as the mql4 program. This can be very useful if you are compiling many indicators and EAs.
+Makefiles are also useful if you are using .mqh files across different MQL4 files. To generate the dependencies between files is uses the C preprocessor.
+Make files will need editing for your own environment.

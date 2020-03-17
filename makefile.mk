@@ -1,5 +1,5 @@
 .PHONY: clean depend all
-ROOT=/c/dev/MQL4
+ROOT=${MT4_HOME}
 MQL=~/.vim/plugged/mql4-dev/bin/compile.sh
 
 MQ4=$(wildcard *.mq4)
