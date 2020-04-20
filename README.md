@@ -11,12 +11,6 @@ Using a combination of snippet, tag and omni completion gives you a useful compl
 
 ## Dependencies
 
-### Syntax highlighting
-```
-Plug 'vobornik/vim-mql4'
-```
-This also sets the filetype to be 'mql4'
-
 ### Async compiling
 ```
 Plug 'tpope/vim-dispatch'
@@ -82,3 +76,9 @@ This plugin set this omni completion option by default for mql4 files.
 Makefiles can be used to launch the compiler. Included with this code is a makefile template which can be included in a Makefile in the same folder as the mql4 program. This can be very useful if you are compiling many indicators and EAs.
 Makefiles are also useful if you are using .mqh files across different MQL4 files. To generate the dependencies between files is uses the C preprocessor.
 Make files will need editing for your own environment.
+
+### Syntax Highlighting
+
+Syntax highlighting is provided by the syntax file from [vobornik/vim-mql4](https://github.com/vobornik/vim-mql4) but is included in
+this plugin for convenience. Many thanks for his excellent work.
+
